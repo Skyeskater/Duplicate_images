@@ -1,7 +1,6 @@
 '''
 Check for identical images.
-You have to add path_to_main_imagefolder on line 12 and 21 (where all your images are) and path_to_duplicates on line 43 and 109 (where you want your duplicates stored).
-
+You have to add path_to_main_imagefolder on line 11 and 20 (where all your images are) and path_to_duplicates on line 38 and 104 (where you want your duplicates stored).
 '''
 
 import cv2
@@ -11,24 +10,20 @@ import re
 
 path_to_main_imagefolder = r'C:\Users\Pictures'
 
-def check_duplicate_images(abs_folder = None, foldername=None):
+def check_duplicate_images(abs_folder = None):
     '''abs_folder is when an absolute path to a folder is given 
     (i.e. when looping over all folders). foldername is when only 
     one folder is specified.'''
     
     
-    if foldername == None and abs_folder == None:
+    if abs_folder == None:
         root_folder = r'C:\Users\Pictures'              #add root_folder
         foldername = input('Enter foldername: ')
         for root, dirs, files in os.walk(root_folder):
             for name in dirs:
                 if name == foldername:
                     file_path_os = os.path.abspath(os.path.join(root, name))
-    
-    elif foldername != None:
-        root_folder = r'E:\Computer\Afbeeldingen\Spitsbergen'
-        file_path_os = os.path.join(root_folder, foldername)
-        
+            
     elif abs_folder != None:
         file_path_os = abs_folder
         #create foldername with regex for the duplicate folder:
@@ -112,7 +107,7 @@ def check_duplicate_images(abs_folder = None, foldername=None):
 '''
 Loop over every directory and subdirectory (including files within 
 root directory) and over all files to change al names (so it doesn't 
-contain spaces)
+contain spaces, for spaces will interfere and will cause errors).
 '''
 def altering_names():
     root_folder = path_to_main_imagefolder
