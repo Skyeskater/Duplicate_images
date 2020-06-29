@@ -1,14 +1,15 @@
-'''Check for identical images'''
+'''
+Check for identical images.
+You have to add path_to_main_imagefolder on line 12 and 21 (where all your images are) and path_to_duplicates on line 43 and 109 (where you want your duplicates stored).
+
+'''
 
 import cv2
 import os
 import shutil
-#import math
-#import itertools
 import re
-#from pathlib import Path
 
-
+path_to_main_imagefolder = r'C:\Users\Pictures'
 
 def check_duplicate_images(abs_folder = None, foldername=None):
     '''abs_folder is when an absolute path to a folder is given 
@@ -17,7 +18,7 @@ def check_duplicate_images(abs_folder = None, foldername=None):
     
     
     if foldername == None and abs_folder == None:
-        root_folder = r'E:\Computer\Afbeeldingen'
+        root_folder = r'C:\Users\Pictures'              #add root_folder
         foldername = input('Enter foldername: ')
         for root, dirs, files in os.walk(root_folder):
             for name in dirs:
@@ -39,7 +40,7 @@ def check_duplicate_images(abs_folder = None, foldername=None):
     os.chdir(file_path_os)
     
     '''Create duplicate folder, if not already created'''
-    file_path_os_dupl = r'E:\Computer\Duplicates'
+    file_path_os_dupl = r'C:\Users\Duplicates'                                  #add path to duplicates
     if not os.path.exists(os.path.join(file_path_os_dupl, foldername)):
         os.makedirs(os.path.join(file_path_os_dupl, foldername))
     
@@ -105,7 +106,7 @@ def check_duplicate_images(abs_folder = None, foldername=None):
     
     print(f'There was a total of {total} duplicate(s).')
     if total:
-        print('They have now been moved to:\n\n' + os.path.join(r'E:\\Computer\\Afbeeldingen\\Duplicates', foldername))
+        print('They have now been moved to:\n\n' + os.path.join(r'C:\Users\Duplicates', foldername))    #add path to duplicates
 
 
 '''
@@ -114,7 +115,7 @@ root directory) and over all files to change al names (so it doesn't
 contain spaces)
 '''
 def altering_names():
-    root_folder = 'E:\\Computer\\Afbeeldingen'
+    root_folder = path_to_main_imagefolder
     for root, dirs, files in os.walk(root_folder):
         print('The following directorynames have been altered:\n')
         for name in dirs:
@@ -139,115 +140,6 @@ def altering_names():
 #altering_names()
 
 '''Finally, check for duplicates (can also do this per foldername).'''
-for x in [x[0] for x in os.walk('E:\\Computer\\Afbeeldingen')]:
+for x in [x[0] for x in os.walk(path_to_main_imagefolder)]:
     print('\n'+x)
     check_duplicate_images(abs_folder = x)
-
-            
-
-    
-'''
-List all subfolders of \Afbeeldingen:
-[x[0] for x in os.walk('E:\\Computer\\Afbeeldingen')]
-'''
-
-# =============================================================================
-# check to adjust
-# def identical_images(file_1, file_2):
-#     file1 = cv2.imread(file_1)
-#     file2 = cv2.imread(file_2)
-#     
-#     '''check if files end with .jpeg or .jpg, since we only want to compare images'''
-#     if not file_1.endswith('.jpg') and not file_1.endswith('.jpeg'):
-#         print('False: not a photo')
-#         return False
-#     
-#     if not file_2.endswith('.jpg') and not file_2.endswith('.jpeg'):
-#         print('False: not a photo')
-#         return False
-# 
-#     '''check if files have same .jpg or .jpeg'''
-#     if file_1[-3:] != file_2[-3:]:
-#         print('False: different: jpg and jpeg files')
-#         return False #images are not equal
-#     
-#     if file1.shape != file2.shape:
-#         print('False: different shapes')
-#         return False #images are not equal
-#     
-#     if file1.shape == file2.shape:
-# #        print('The images have same size and channels')
-#     
-#         difference = cv2.subtract(file1, file2)
-#         b, g, r = cv2.split(difference)
-#         
-#         if cv2.countNonZero(b) == 0 and cv2.countNonZero(g) == 0 and cv2.countNonZero(r) == 0:
-#             print('equal')
-#             return True #images are equal
-#         else:
-#             print('not equal')
-#             return False #images are not equal
-# 
-# 
-# x = r'C:\Users\mulde\Pictures\Spitsbergen\Aurora_1\IMG_9613.mov'
-# y = r'C:\Users\mulde\Pictures\Spitsbergen\Aurora_1\ab1.jpg'
-# identical_images(x, y)
-# =============================================================================
-        
-
-'''Make sure there are no spaces in directories within root directory ('Afbeeldingen')'''
-# =============================================================================
-# root_folder = 'C:\\Users\\mulde\\Pictures'
-# for root, dirs, files in os.walk(root_folder):
-#     for name in dirs:
-# #        print(os.path.join(root, name))
-# #        print('\n')
-#         print('The following directorynames have been altered:\n')
-#         if ' ' in name:
-#             print('old:  ' + name)
-#             space_regex = re.compile(' ')
-#             name_new = space_regex.sub('_', name)
-#             shutil.move(os.path.join(root, name), os.path.join(root, name_new))
-#             print('new:  ' + name_new)
-#     for name in files:
-# #        print(os.path.join(root, name))
-# #        print('\n')
-#         print('The following filenames have been altered:\n')
-#         if ' ' in name:
-#             print('old:  ' + name)
-#             space_regex = re.compile(' ')
-#             name_new = space_regex.sub('_', name)
-#             shutil.move(os.path.join(root, name), os.path.join(root, name_new))
-#             print('new:  ' + name_new)   
-# =============================================================================
-
-
-
-
-'''.ini files'''
-#root_folder = 'C:\\Users\\mulde\\Pictures\\Spitsbergen'
-#os.chdir(root_folder)
-#for dirs in os.listdir(root_folder):
-#    if not dirs.endswith('.ini'): #.ini file shows up if the function for showing hidden files is enabled (almost every folder)
-#        [x[0] for x in os.walk('C:\\Users\\mulde\\Pictures\\Spitsbergen')]
-
-
-
-#os.chdir(root_folder)
-#for root, dirs, files in os.walk(root_folder):
-#    for name in dirs:
-#        if ' ' in dirs:
-#            print('The following directorynames have been altered:\n')
-#            print('old:  ' + dirs)
-#            space_regex = re.compile(' ')
-#            dirs_new = space_regex.sub('_', dirs)
-#            shutil.move(os.path.join(root_folder, dirs), os.path.join(root_folder, dirs_new))
-#            print('new:  ' + dirs_new)
-#    for name in files:
-#        if ' ' in files:
-#            print('The following directorynames have been altered:\n')
-#            print('old:  ' + files)
-#            space_regex = re.compile(' ')
-#            files_new = space_regex.sub('_', dirs)
-#            shutil.move(os.path.join(root_folder, files), os.path.join(root_folder, files_new))
-#            print('new:  ' + files_new)
